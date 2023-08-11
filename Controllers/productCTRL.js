@@ -234,10 +234,10 @@ export const prdctFilter = async (req, res) => {
 };
 
 // Product count controller(
-export const productCountCTRL = async (req, res) => {
+export const  productCountCTRL = async (req, res) => {
   try {
     const total = await productModel.find({}).estimatedDocumentCount();
-    res.status({
+    res.status(200).send({
       success: true,
       total,
     });
@@ -253,7 +253,7 @@ export const productCountCTRL = async (req, res) => {
 //product list based on page
 export const productListCTRL = async (req, res) => {
   try {
-    const perPage = 2;
+    const perPage = 6;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
