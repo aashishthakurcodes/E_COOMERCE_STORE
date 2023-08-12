@@ -253,24 +253,28 @@ export const  productCountCTRL = async (req, res) => {
 //product list based on page
 export const productListCTRL = async (req, res) => {
   try {
-    const perPage = 6;
-    const page = req.params.page ? req.params.page : 1;
+    const perPage = 3;
+    const page = req.params.page ? parseInt(req.params.page) : 1;
+    const skip = (page - 1) * perPage;
+
     const products = await productModel
       .find({})
       .select("-photo")
-      .skip(page - 1 + perPage)
+      .skip(skip)
       .limit(perPage)
       .sort({ createdAt: -1 });
-      res.status(200).send({
-        success:true,
-        products,
-      })
+
+    res.status(200).send({
+      success: true,
+      products,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).send({
-      message: "Error in product count page",
+      message: "Error in product list page",
       error,
       success: false,
     });
   }
 };
+
