@@ -30,13 +30,7 @@ router.get("/product-photo/:pid", productPhotoCTRL);
 router.delete("/delete-product/:pid", deletePrdctCTRL);
 
 //Update
-router.put(
-  "/update-product/:pid",
-  requireSign,
-  isAdmin,
-  formidable(),
-  updateCTRL
-);
+router.put("/update-product/:pid",requireSign,isAdmin,formidable(),updateCTRL);
 
 //Filter Product
 router.post("/product-filter", prdctFilter);
