@@ -9,7 +9,7 @@ import {
   updateCTRL,
   prdctFilter,
   productCountCTRL,
-  productListCTRL
+  productListCTRL,searchPrdtCTRL
 } from "../Controllers/productCTRL.js";
 import formidable from "express-formidable"; //image upload
 const router = express.Router();
@@ -41,4 +41,7 @@ router.get("/product-count", productCountCTRL);
 //Product per Page
 router.get('/product-list/:page',productListCTRL)
 
+
+//search prdct
+router.get('/search/:keyword',searchPrdtCTRL)
 export default router;
