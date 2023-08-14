@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import productModel from "../Models/productModel.js";
+import CategoryModel from "../Models/CategoryModel.js";
 import fs from "fs";
 
 //POST METHOD
@@ -9,7 +10,6 @@ export const productCTRL = async (req, res) => {
       req.fields;
 
     const { photo } = req.files;
-
     //Valiadation
     switch (true) {
       case !name:
@@ -293,6 +293,46 @@ export const searchPrdtCTRL=async (req,res)=>{
       message: "Error in product list page",
       error,
       success: false,
+    });
+  }
+}
+
+
+//Similiar Products
+export const relatedPrdctCTRL=async(req,res)=>{
+  try {
+    const {pid,cid}=req.params 
+    const products=await productModel.find({
+      category:cid,
+      _id:{$ne:pid}
+    }).select('-photo').limit(3).populate("category")
+    res.status(200).send({success:true,products})
+
+  } catch (error)  {
+    console.log(error);
+    res.status(400).send({
+      message: "Error in Similiar Product",
+      error,
+      success: false,
+    });
+  }
+}
+
+//Get product by Category
+export const productcatCTRL=async(req,res)=>{
+  try {
+   const category =await CategoryModel.findOne({slug:req.params.slug})
+   const products =await productModel.find({category}).populate('category') 
+   res.status(200).send({
+    success:true,
+    category,products
+   })
+  } catch (error){
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in deleting Category Wise Data",
+      error,
     });
   }
 }

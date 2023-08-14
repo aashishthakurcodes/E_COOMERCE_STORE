@@ -9,7 +9,10 @@ import {
   updateCTRL,
   prdctFilter,
   productCountCTRL,
-  productListCTRL,searchPrdtCTRL
+  productListCTRL,
+  searchPrdtCTRL,
+  relatedPrdctCTRL,
+  productcatCTRL,
 } from "../Controllers/productCTRL.js";
 import formidable from "express-formidable"; //image upload
 const router = express.Router();
@@ -30,7 +33,13 @@ router.get("/product-photo/:pid", productPhotoCTRL);
 router.delete("/delete-product/:pid", deletePrdctCTRL);
 
 //Update
-router.put("/update-product/:pid",requireSign,isAdmin,formidable(),updateCTRL);
+router.put(
+  "/update-product/:pid",
+  requireSign,
+  isAdmin,
+  formidable(),
+  updateCTRL
+);
 
 //Filter Product
 router.post("/product-filter", prdctFilter);
@@ -39,9 +48,14 @@ router.post("/product-filter", prdctFilter);
 router.get("/product-count", productCountCTRL);
 
 //Product per Page
-router.get('/product-list/:page',productListCTRL)
-
+router.get("/product-list/:page", productListCTRL);
 
 //search prdct
-router.get('/search/:keyword',searchPrdtCTRL)
+router.get("/search/:keyword", searchPrdtCTRL);
+
+//Similiar Product
+router.get("/related-product/:pid/:cid", relatedPrdctCTRL);
+
+//Category wise Product
+router.get("/product-category/:slug", productcatCTRL);
 export default router;
