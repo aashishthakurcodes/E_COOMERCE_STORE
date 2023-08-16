@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAuth } from "../../Context/auth";
 import toast from "react-hot-toast";
+import SearchInput from "../Form/SearchInput";
 const Header = () => {
   const [auth, setauth] = useAuth();
   const handleLogout = () => {
@@ -34,6 +35,9 @@ const Header = () => {
               E-COMMERCE <FiShoppingCart />
             </NavLink>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li>
+                <SearchInput/>
+              </li>
               <li className="nav-item">
                 <NavLink
                   to={"/"}

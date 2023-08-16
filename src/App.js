@@ -17,6 +17,7 @@ import Order from "./Pages/Order";
 import Profile from "./Pages/Profile";
 import Product from "./Pages/Admin/Product";
 import UpdateProduct from "./Pages/Admin/UpdateProduct";
+import SearchInput from "./Components/Form/SearchInput";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/search" element={<SearchInput />} /> */}
         {/* //NestedcRoutes */}
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
