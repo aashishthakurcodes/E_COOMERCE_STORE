@@ -9,8 +9,11 @@
 /coverage
 
 
+<<<<<<< HEAD
 # production
 /build
+=======
+>>>>>>> 12d7087 (Product Updated)
 
 # misc
 .DS_Store
