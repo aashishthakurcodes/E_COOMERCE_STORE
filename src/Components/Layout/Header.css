@@ -1,0 +1,47 @@
+.main{
+      border: 2px solid yellowgreen;
+      width: 100%;
+}
+.cart{
+    /* border: 3px solid red; */
+    /* display: flex;
+    align-items: center;
+    margin-top: 4px; */
+    margin-top: 6px;
+    padding-right: 2px;
+   
+}
+.nav-link {
+    color: rgb(255, 255, 255); /* Default text color */
+    transition: color 0.3s; /* Adding smooth transition effect for color change */
+  }
+  
+  /* Hover effect for navigation links */
+  .nav-link:hover {
+    color: #ec9447 /* Change to your desired hover text color */
+  }
+  .navbar{
+    border-bottom: 3px solid #ec9447 ;
+  }
+/* Sticky Header */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    transform: translateY(-80px);
+    animation: stickyheader 0.8s ease forwards;
+  }
+  @keyframes stickyheader {
+    0% {
+      transform: translateY(-80px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  .main-header {
+    z-index: 1;
+  }
+
+
+
+

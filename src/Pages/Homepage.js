@@ -6,8 +6,13 @@ import toast from "react-hot-toast";
 import { Checkbox, Radio } from "antd";
 import axios from "axios";
 import { Prices } from "../Components/Price";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../Context/Cart";
+import './Homepage.css'
+
 
 const Homepage = () => {
+  const [cart, setCart] = useCart();
   const [products, setProduct] = useState([]);
   const [category, setCategory] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -16,6 +21,7 @@ const Homepage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   //Get all category
   const getAllCategory = async (req, res) => {
@@ -28,8 +34,6 @@ const Homepage = () => {
       console.log(error);
     }
   };
-
-  
 
   // get All Product
   const getAllProduct = async () => {
@@ -59,9 +63,7 @@ const Homepage = () => {
   useEffect(() => {
     getAllCategory();
     getTotal();
-  }, []); 
-
- 
+  }, []);
 
   //Load More
   const loadMore = async () => {
@@ -76,7 +78,6 @@ const Homepage = () => {
     }
   };
 
-  
   useEffect(() => {
     if (page === 1) return;
     loadMore();
@@ -114,12 +115,29 @@ const Homepage = () => {
     }
   };
 
+  const [scroll ,setScroll]=useState(false);
+  const handleScroll=()=>{
+    const offset=window.scrollY;
+    if(offset>500){
+      setScroll(true)
+    }else{
+      setScroll(false)
+    }
+  }
+useEffect(()=>{
+  window.addEventListener("scroll",handleScroll)
+},[]) 
+
   return (
     <Layout title={"All Product"}>
-      <div className="row">
-        <div className="col-md-3">
+      
+      <div className="main_container">
+      <div className="row mainCLS">
+        <div className="section_1">
+        <div className={`main-header ${scroll ? "sticky-header":" "}`} >
+        <div className="col-md-3 cat-container">
           <h4 className="text-center">Filter By Category</h4>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column cat-container2">
             {category?.map((c) => (
               <Checkbox
                 key={c._id}
@@ -133,9 +151,9 @@ const Homepage = () => {
 
         {/* //Filter By price */}
 
-        <div className="col-md-3">
+        <div className="col-md-3 prc-container">
           <h4 className="text-center">Filter By Price</h4>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column  prc-container2">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
                 <div key={p._id}>
@@ -144,7 +162,7 @@ const Homepage = () => {
               ))}
             </Radio.Group>
           </div>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column prc_btn">
             <button
               className="btn btn-primary"
               onClick={() => window.location.reload()}
@@ -153,31 +171,54 @@ const Homepage = () => {
             </button>
           </div>
         </div>
-
-        <div className="col-md-9">
-          {JSON.stringify(checked, null, 4)}
-          {JSON.stringify(radio, null, 4)}
+        </div>
+        </div>
+        <div className="col-md-9 product_container">
           <h1 className="text-center">All Product</h1>
           <div className="d-flex flex-wrap">
-            <h1>Products</h1>
             <div className="hmpage_conatiner">
-            {console.log(products)}
-            {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
-                <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description.substring(0, 10)}</p>
-                  <p className="card-text">${p.price}</p>
-                  <button className="btn btn-primary">More details</button>
-                  <button className="btn btn-secondary">Add to acrt</button>
+              {console.log(products)}
+              {products?.map((p) => (
+                <div
+                  className="card m-2"
+                  // style={{ width: "18rem" }}
+                  key={p._id}
+                >
+                  <div className="img_container">
+                  <img
+                    src={`/api/v1/product/product-photo/${p._id}`}
+                    className="card-img-top"
+                    alt={p.name}
+                  />
+                  </div>
+                  <span><hr/></span>
+                  
+                  <div className="card-body">
+                    <div className="card_info">
+                    <h5 className="card-title">{p.name}</h5>
+                    <p className="card-text">${p.price}</p>
+                    </div>
+                   
+                    <div className="card_btn">
+                    <button
+                      className="button-50"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      Details
+                    </button>
+                    <button
+                      className="button-51"
+                      onClick={() => {
+                        setCart([...cart, p]);
+                        toast.success("Item Added to Cart");
+                      }}
+                    >
+                      Add to Cart
+                    </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
           <div className="m-2 p-3">
@@ -195,8 +236,9 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+      </div>
     </Layout>
   );
 };
 
-export default Homepage; 
+export default Homepage;

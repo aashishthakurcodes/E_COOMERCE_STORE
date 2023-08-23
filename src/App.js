@@ -18,6 +18,12 @@ import Profile from "./Pages/Profile";
 import Product from "./Pages/Admin/Product";
 import UpdateProduct from "./Pages/Admin/UpdateProduct";
 import SearchInput from "./Components/Form/SearchInput";
+import SearchPG from "./Pages/SearchPG";
+import ProductPage from "./Pages/ProductPage";
+import AllCategories from "./Pages/AllCategories";
+import CategoryWiseData from "./Pages/CategoryWiseData";
+import Cardpage from "./Pages/Cardpage";
+import AdminOrder from "./Pages/Admin/AdminOrder";
 
 function App() {
   return (
@@ -27,7 +33,12 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/search" element={<SearchInput />} /> */}
+        <Route path="/search" element={<SearchPG />} />
+        <Route path="/cart" element={<Cardpage />} />
+        <Route path="/product/:slug" element={<ProductPage />} />
+        <Route path="/categories" element={<AllCategories />} />
+        <Route path="/category/:slug" element={<CategoryWiseData />} />
+        <Route path="/cart/order" element={<Order/>} />
         {/* //NestedcRoutes */}
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
@@ -41,6 +52,7 @@ function App() {
           <Route path="create-product" element={<CreateProduct />} />
           <Route path="admin/products/:slug" element={<UpdateProduct />} />
           <Route path="admin/products" element={<Product />} />
+          <Route path="admin/orders" element={<AdminOrder />} />
           <Route path="users" element={<User />} />
         </Route>
         <Route path="/forgot-password" element={<Forgetpass />} />

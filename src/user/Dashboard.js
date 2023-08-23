@@ -18,6 +18,7 @@ const Dashboard = () => {
           <h3>Name :-{auth?.user?.name}</h3>
           <h3>E-mail :-{auth?.user?.email}</h3>
           <h3>Phone :-{auth?.user?.phone}</h3>
+          <h3>Address :-{auth?.user?.address}</h3>
             </div>
           </div>
         </div>
